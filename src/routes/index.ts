@@ -13,6 +13,7 @@ router.use(authentication);
 router.use(authorization);
 
 router.get("/:id", UserController.getUserById);
+router.put("/:id", UserController.updateUser);
 
 router.use(errorHandler);
 

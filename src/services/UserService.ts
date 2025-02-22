@@ -1,4 +1,10 @@
-import { findByEmail, createUser, findAllUsers, findById } from "../repository/UserRepository";
+import {
+  findByEmail,
+  createUser,
+  findAllUsers,
+  findById,
+  updateUser,
+} from "../repository/UserRepository";
 import { comparePassword, hashPassword } from "../helpers/bcrypt";
 import { createToken } from "../helpers/jsonwebtoken";
 
@@ -45,8 +51,8 @@ class UserService {
 
       const data = {
         id: user.id,
-      }
-      
+      };
+
       const token = await createToken(data);
 
       return {
@@ -80,10 +86,37 @@ class UserService {
     }
   }
 
-  static async getUserById(id: any): Promise<any> {
+  static async getUserById(id: number): Promise<any> {
     try {
       const data = await findById(id);
-      if(!data) throw { name: "UserNotFound" };
+      if (!data) throw { name: "UserNotFound" };
+
+      return {
+        status: 200,
+        message: null,
+        data,
+      };
+    } catch (error) {
+      return {
+        error,
+      };
+    }
+  }
+
+  static async updateUser(payload: any): Promise<any> {
+    try {
+      const { id, fullName, gender, dateOfBirth, createdAt } = payload;
+
+      const user = await findById(id);
+      if (!user) throw { name: "UserNotFound" };
+
+      const data = await updateUser({
+        id,
+        fullName,
+        gender,
+        dateOfBirth,
+        createdAt,
+      });
 
       return {
         status: 200,

@@ -1,3 +1,4 @@
+import exp from "constants";
 import { prisma } from "../helpers/prisma";
 
 export async function findByEmail(email: string) {
@@ -68,5 +69,32 @@ export async function findAllUsers(page: number, pageSize: number) {
     skip: page,
     take: pageSize,
   });
+  return data;
+}
+
+export async function updateUser(payload: any) {
+  const data = await prisma.user.update({
+    where: {
+      id: payload.id,
+    },
+    data: {
+      fullName: payload.fullName,
+      gender: payload.gender,
+      dateOfBirth: payload.dateOfBirth,
+      createdAt: payload.createdAt,
+      updatedAt: new Date(),
+    },
+    select: {
+      id: true,
+      email: true,
+      fullName: true,
+      gender : true,
+      dateOfBirth: true,
+      role: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
   return data;
 }

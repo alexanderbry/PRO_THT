@@ -54,4 +54,25 @@ const LoginSchema = Joi.object({
     })
 });
 
-export { UserSchema, LoginSchema };
+const UpdateSchema = Joi.object({
+    fullName: Joi.string().required().messages({
+        'string.base': 'Full name must be a string',
+        'any.required': 'Full name is required'
+    }),
+    gender: Joi.string().valid('male', 'female').required().messages({
+        'string.base': 'Gender must be a string',
+        'any.only': 'Gender must be one of male or female',
+        'any.required': 'Gender is required'
+    }),
+    dateOfBirth: Joi.date().max('now').required().messages({
+        'date.base': 'Date of birth must be a valid date',
+        'date.max': 'Date of birth cannot be in the future',
+        'any.required': 'Date of birth is required'
+    }),
+    createdAt: Joi.date().default(() => new Date()).messages({
+        'date.base': 'Created at must be a valid date'
+    }),
+});
+        
+
+export { UserSchema, LoginSchema, UpdateSchema };
