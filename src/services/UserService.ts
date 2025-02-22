@@ -1,4 +1,4 @@
-import { findByEmail, createUser } from "../repository/UserRepository";
+import { findByEmail, createUser, findAllUsers } from "../repository/UserRepository";
 import { comparePassword, hashPassword } from "../helpers/bcrypt";
 import { createToken } from "../helpers/jsonwebtoken";
 
@@ -53,6 +53,22 @@ class UserService {
         status: 200,
         message: "User logged in successfully",
         data: token,
+      };
+    } catch (error) {
+      return {
+        error,
+      };
+    }
+  }
+
+  static async getAllUsers(): Promise<any> {
+    try {
+      const data = await findAllUsers();
+
+      return {
+        status: 200,
+        message: null,
+        data,
       };
     } catch (error) {
       return {

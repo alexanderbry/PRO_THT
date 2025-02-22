@@ -1,13 +1,23 @@
 import { prisma } from "../helpers/prisma";
 
 export async function findByEmail(email: string) {
-    const data = prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
+  const data = prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
 
-    return data
+  return data;
+}
+
+export async function findById(id: number) {
+  const data = prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  return data;
 }
 
 export async function createUser(payload: any) {
@@ -19,10 +29,32 @@ export async function createUser(payload: any) {
       fullName: true,
       gender: true,
       dateOfBirth: true,
+      role: true,
       createdAt: true,
       updatedAt: true,
-    }
+    },
   });
 
+  return data
+}
+
+export async function findAllUsers() {
+  const data = prisma.user.findMany({
+    where: {
+      role: {
+        not: 'admin',
+      },
+    },
+    select: {
+      id: true,
+      email: true,
+      fullName: true,
+      gender: true,
+      dateOfBirth: true,
+      role: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
   return data;
 }

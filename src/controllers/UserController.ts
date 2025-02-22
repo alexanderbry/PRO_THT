@@ -60,6 +60,22 @@ class UserController {
       next(error);
     }
   }
+
+  static async getAllUsers(
+    req: Request, res: Response, next: NextFunction
+  ): Promise<any> {
+    try {
+      const data = await UserService.getAllUsers();
+      
+      return res.status(data.status).json({
+        status: data.status,
+        message: data.message,
+        data: data.data,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default UserController;
