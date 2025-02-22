@@ -98,3 +98,11 @@ export async function updateUser(payload: any) {
 
   return data;
 }
+
+export async function deleteUser(id: number) {
+  await prisma.user.delete({
+    where: {
+      id,
+    },
+  });
+}
