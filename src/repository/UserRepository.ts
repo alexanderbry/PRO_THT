@@ -38,7 +38,7 @@ export async function createUser(payload: any) {
   return data
 }
 
-export async function findAllUsers() {
+export async function findAllUsers(page: number, pageSize: number) {
   const data = prisma.user.findMany({
     where: {
       role: {
@@ -55,6 +55,8 @@ export async function findAllUsers() {
       createdAt: true,
       updatedAt: true,
     },
+    skip: page,
+    take: pageSize,
   });
   return data;
 }

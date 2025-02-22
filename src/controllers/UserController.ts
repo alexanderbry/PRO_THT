@@ -65,8 +65,14 @@ class UserController {
     req: Request, res: Response, next: NextFunction
   ): Promise<any> {
     try {
-      const data = await UserService.getAllUsers();
-      
+      const page = req.query.page ? +req.query.page : 0
+      const pageSize = req.query.pageSize ? +req.query.pageSize : 20;
+
+      const payload = { page, pageSize };
+
+      const data = await UserService.getAllUsers(payload);
+      if (data.error) throw data.error;
+
       return res.status(data.status).json({
         status: data.status,
         message: data.message,

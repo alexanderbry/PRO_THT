@@ -61,9 +61,11 @@ class UserService {
     }
   }
 
-  static async getAllUsers(): Promise<any> {
+  static async getAllUsers(payload: any): Promise<any> {
     try {
-      const data = await findAllUsers();
+      const { page, pageSize } = payload;
+
+      const data = await findAllUsers(page, pageSize);
 
       return {
         status: 200,
