@@ -15,6 +15,16 @@ export async function findById(id: number) {
     where: {
       id,
     },
+    select: {
+      id: true,
+      email: true,
+      fullName: true,
+      gender: true,
+      dateOfBirth: true,
+      role: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
 
   return data;

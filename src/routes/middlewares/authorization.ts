@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-export const authorization = (req: Request, res: Response, next: NextFunction) => {
+const authorization = (req: Request, res: Response, next: NextFunction) => {
   try {
     if (res.locals.loginSession.role !== "admin") throw { name: "Forbidden" };
 
@@ -9,3 +9,5 @@ export const authorization = (req: Request, res: Response, next: NextFunction) =
     next(error);
   }
 }
+
+export default authorization;

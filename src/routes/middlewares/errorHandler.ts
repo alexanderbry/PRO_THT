@@ -19,6 +19,14 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
       status = 400;
       message = "Email or password is incorrect";
       break;
+    case "UsersEmpty":
+      status = 404;
+      message = "Users data is empty";
+      break;
+    case "UserNotFound":
+      status = 404;
+      message = "User data not found";
+      break;
     case "Not Found":
       status = 404;
       message = "Data not found";

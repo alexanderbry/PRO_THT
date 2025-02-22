@@ -82,6 +82,25 @@ class UserController {
       next(error);
     }
   }
+
+  static async getUserById(
+    req: Request, res: Response, next: NextFunction
+  ): Promise<any> {
+    try {
+      const id = +req.params.id;
+
+      const data = await UserService.getUserById(id);
+      if (data.error) throw data.error;
+
+      return res.status(data.status).json({
+        status: data.status,
+        message: data.message,
+        data: data.data,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default UserController;
