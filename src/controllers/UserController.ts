@@ -69,8 +69,11 @@ class UserController {
     try {
       const page = req.query.page ? +req.query.page : 0;
       const pageSize = req.query.pageSize ? +req.query.pageSize : 20;
+      const search = req.query.search ? req.query.search.toString() : '';
+      const sort = req.query.sort ? req.query.sort.toString() : 'asc';
 
-      const payload = { page, pageSize };
+      
+      const payload = { page, pageSize, search, sort };
 
       const data = await UserService.getAllUsers(payload);
       if (data.error) throw data.error;

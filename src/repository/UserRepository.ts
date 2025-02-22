@@ -49,12 +49,24 @@ export async function createUser(payload: any) {
   return data
 }
 
-export async function findAllUsers(page: number, pageSize: number) {
+export async function findAllUsers(page: number, pageSize: number, search: string, sort: string) {
   const data = prisma.user.findMany({
     where: {
       role: {
         not: 'admin',
       },
+      OR: [
+        {
+          email: {
+            contains: search,
+          },
+        },
+        {
+          fullName: {
+            contains: search,
+          },
+        },
+      ],
     },
     select: {
       id: true,
@@ -68,6 +80,9 @@ export async function findAllUsers(page: number, pageSize: number) {
     },
     skip: page,
     take: pageSize,
+    orderBy: {
+      createdAt: sort as 'asc' | 'desc',
+    },
   });
   return data;
 }

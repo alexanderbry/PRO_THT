@@ -70,9 +70,9 @@ class UserService {
 
   static async getAllUsers(payload: any): Promise<any> {
     try {
-      const { page, pageSize } = payload;
+      const { page, pageSize, search, sort } = payload;
 
-      const data = await findAllUsers(page, pageSize);
+      const data = await findAllUsers(page, pageSize, search, sort);
       if (data.length === 0) throw { name: "UsersEmpty" };
 
       return {
