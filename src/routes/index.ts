@@ -4,6 +4,7 @@ import errorHandler from "./middlewares/errorHandler";
 const router = Router();
 
 router.post("/register", UserController.create);
+router.post("/login", UserController.login);
 
 router.use(errorHandler);
 
