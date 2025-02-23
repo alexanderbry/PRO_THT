@@ -35,4 +35,9 @@
     npm run start
     ```
 
+   If you want to start the application in development mode, use:
+    ```bash
+    npm run dev
+    ```
+
 2. Open your browser and navigate to `http://localhost:3000`.
