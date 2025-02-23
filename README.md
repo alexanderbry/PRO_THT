@@ -25,7 +25,7 @@
 
 2. Run the migration to create the database tables:
     ```bash
-    npx prisma migrate deploy
+    npx prisma db seed
     ```
 
 ## How to Use
