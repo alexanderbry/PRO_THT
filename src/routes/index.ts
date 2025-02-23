@@ -11,7 +11,7 @@ router.post("/login", UserController.login);
 
 router.post("/admin/login", UserController.adminLogin);
 
-router.get("/:id", authentication, authorization, UserController.getUserById);
+router.get("/:id", authentication, UserController.getUserById);
 router.put("/:id", authentication, authorization, UserController.updateUser);
 router.delete("/:id", authentication, authorization, UserController.deleteUser);
 
