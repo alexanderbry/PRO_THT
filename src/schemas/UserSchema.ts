@@ -54,6 +54,18 @@ const LoginSchema = Joi.object({
     })
 });
 
+const AdminLoginSchema = Joi.object({
+    id: Joi.number().integer().messages({
+        'number.base': 'ID must be a number',
+        'number.integer': 'ID must be an integer',
+    }),
+    password: Joi.string().min(8).required().messages({
+        'string.base': 'Password must be a string',
+        'string.min': 'Password must be at least 8 characters long',
+        'any.required': 'Password is required'
+    })
+});
+
 const UpdateSchema = Joi.object({
     fullName: Joi.string().required().messages({
         'string.base': 'Full name must be a string',
@@ -75,4 +87,4 @@ const UpdateSchema = Joi.object({
 });
         
 
-export { UserSchema, LoginSchema, UpdateSchema };
+export { UserSchema, LoginSchema, AdminLoginSchema, UpdateSchema };

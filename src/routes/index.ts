@@ -9,6 +9,8 @@ router.get("/", UserController.getAllUsers);
 router.post("/register", UserController.create);
 router.post("/login", UserController.login);
 
+router.post("/admin/login", UserController.adminLogin);
+
 router.use(authentication);
 router.use(authorization);
 

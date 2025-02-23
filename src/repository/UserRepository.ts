@@ -1,4 +1,3 @@
-import exp from "constants";
 import { prisma } from "../helpers/prisma";
 
 export async function findByEmail(email: string) {
@@ -19,6 +18,27 @@ export async function findById(id: number) {
     select: {
       id: true,
       email: true,
+      fullName: true,
+      gender: true,
+      dateOfBirth: true,
+      role: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return data;
+}
+
+export async function findByIdAdmin(id: number) {
+  const data = prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      email: true,
+      password: true,
       fullName: true,
       gender: true,
       dateOfBirth: true,

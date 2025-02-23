@@ -5,6 +5,7 @@ import {
   findById,
   updateUser,
   deleteUser,
+  findByIdAdmin,
 } from "../repository/UserRepository";
 import { comparePassword, hashPassword } from "../helpers/bcrypt";
 import { createToken } from "../helpers/jsonwebtoken";
@@ -52,6 +53,7 @@ class UserService {
 
       const data = {
         id: user.id,
+        role: user.role
       };
 
       const token = await createToken(data);
@@ -67,6 +69,37 @@ class UserService {
       };
     }
   }
+
+  static async adminLogin(payload: any): Promise<any> {
+    try {
+      let { id, password } = payload;
+
+      const user = await findByIdAdmin(id);
+      if (!user) throw { name: "InvalidEmail/Password" };
+
+      const isPasswordMatch = await comparePassword(password, user.password);
+      if (!isPasswordMatch) throw { name: "InvalidEmail/Password" };
+
+      const data = {
+        id: user.id,
+        role: user.role
+      };
+
+      const token = await createToken(data);
+
+      return {
+        status: 200,
+        message: "Admin logged in successfully",
+        data: token,
+      };
+    } catch (error) {
+      return {
+        error,
+      };
+    }
+  }
+  
+
 
   static async getAllUsers(payload: any): Promise<any> {
     try {

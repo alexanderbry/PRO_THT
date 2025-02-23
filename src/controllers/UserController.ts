@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { UserSchema, LoginSchema, UpdateSchema } from "../schemas/UserSchema";
+import { UserSchema, LoginSchema, UpdateSchema, AdminLoginSchema } from "../schemas/UserSchema";
 import UserService from "../services/UserService";
 
 class UserController {
@@ -10,7 +10,7 @@ class UserController {
   ): Promise<any> {
     try {
       const { error, value } = UserSchema.validate(req.body);
-
+      
       if (error) {
         return res.status(401).json({
           status: 401,
@@ -18,10 +18,10 @@ class UserController {
           data: null,
         });
       }
-
+      
       const data = await UserService.create(value);
       if (data.error) throw data.error;
-
+      
       return res.status(data.status).json({
         status: data.status,
         message: data.message,
@@ -31,7 +31,7 @@ class UserController {
       next(error);
     }
   }
-
+  
   static async login(
     req: Request,
     res: Response,
@@ -39,7 +39,7 @@ class UserController {
   ): Promise<any> {
     try {
       const { error, value } = LoginSchema.validate(req.body);
-
+      
       if (error) {
         return res.status(401).json({
           status: 401,
@@ -47,10 +47,39 @@ class UserController {
           data: null,
         });
       }
-
+      
       const data = await UserService.login(value);
       if (data.error) throw data.error;
-
+      
+      return res.status(data.status).json({
+        status: data.status,
+        message: data.message,
+        data: data.data,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  
+  static async adminLogin(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
+    try {
+      const { error, value } = AdminLoginSchema.validate(req.body);
+  
+      if (error) {
+        return res.status(401).json({
+          status: 401,
+          message: error.message,
+          data: null,
+        });
+      }
+  
+      const data = await UserService.adminLogin(value);
+      if (data.error) throw data.error;
+  
       return res.status(data.status).json({
         status: data.status,
         message: data.message,
@@ -162,6 +191,7 @@ class UserController {
       next(error);
     }
   }
+
 }
 
 export default UserController;
