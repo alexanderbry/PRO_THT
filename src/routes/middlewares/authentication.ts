@@ -8,8 +8,6 @@ const authentication = async (
   next: NextFunction
 ) => {
   try {
-    console.log("Requested route:", req.originalUrl);
-
     if (!req.headers.authorization) throw { name: "Unauthorized" };
 
     const [bearer, token] = req.headers.authorization.split(" ");
