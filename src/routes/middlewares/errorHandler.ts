@@ -39,6 +39,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
       console.error(err);
       break;
   }
+  console.error(err);
   
   res.status(status).json({ status, message, data });
 };
