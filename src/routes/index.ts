@@ -11,8 +11,8 @@ router.post("/login", UserController.login);
 
 router.post("/admin/login", UserController.adminLogin);
 
-router.use(authentication);
-router.use(authorization);
+// router.use(authentication);
+// router.use(authorization);
 
 router.get("/:id", UserController.getUserById);
 router.put("/:id", UserController.updateUser);
